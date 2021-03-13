@@ -14,10 +14,10 @@ public class GuitarTester
 		Inventory inventory = new Inventory();
 		initializeInventory(inventory);
 		
-		Guitar guitar = new Guitar("", 0, Builder.COLLINGS, "Stratocastor", Type.ELECTRIC,
-				Wood.MAPLE, Wood.CEDAR);
+		GuitarSpec clientsChoice = new GuitarSpec(Builder.COLLINGS, "Stratocastor", Type.ELECTRIC,
+				Wood.MAPLE, Wood.CEDAR, 12);
 		
-		List<Guitar> matchingGuitar = inventory.search(guitar);
+		List<Guitar> matchingGuitar = inventory.search(clientsChoice);
 		
 		if(!matchingGuitar.isEmpty())
 		{
@@ -25,11 +25,13 @@ public class GuitarTester
 			for(Iterator<Guitar> i = matchingGuitar.iterator(); i.hasNext();)
 			{
 				Guitar temp = (Guitar)i.next();
+				GuitarSpec spec = temp.getSpec();
 				System.out.println("we have a " +
-						temp.getBuilder() + " " + temp.getModel() + " " +
-						temp.getType() + " guitar:\n  " + 
-						temp.getBackwood() + " back and sides,\n  " + 
-						temp.getTopWood() + " top.\n you can have it for only: " +
+						spec.getBuilder() + " " + spec.getModel() + " " +
+						spec.getType() + " " + spec.getNumStrings() + "-string" 
+						+ " guitar:\n  " + 
+						spec.getBackwood() + " back and sides,\n  " + 
+						spec.getTopWood() + " top.\n you can have it for only: " +
 						temp.getPrice());
 			}
 		}
@@ -39,12 +41,12 @@ public class GuitarTester
 	private static void initializeInventory(Inventory inventory)
 	{
 		inventory.addGuitar("1234", 500.5, Builder.COLLINGS,
-				"Stratocastor", Type.ELECTRIC, Wood.MAPLE, Wood.CEDAR);
+				"Stratocastor", Type.ELECTRIC, Wood.MAPLE, Wood.CEDAR, 12);
 		inventory.addGuitar("23456", 14632.5, Builder.FENDER,
-				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.CEDAR);
+				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.CEDAR, 11);
 		inventory.addGuitar("6542", 300.5, Builder.GIBSON,
-				"Not model", Type.ELECTRIC, Wood.JAPENES, Wood.MAPLE);
+				"Not model", Type.ELECTRIC, Wood.JAPENES, Wood.MAPLE, 12);
 		inventory.addGuitar("95412", 400.4, Builder.GIBSON,
-				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.INDIA_WOOD);
+				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.INDIA_WOOD, 3);
 	}
 }
