@@ -1,6 +1,8 @@
-package RicksApp;
+package RicksApp.Instruments;
 
-public abstract class Instrument
+import RicksApp.Specs.InstrumentSpec;
+
+public class Instrument
 {
 	private String serialNumber;
 	private double price;

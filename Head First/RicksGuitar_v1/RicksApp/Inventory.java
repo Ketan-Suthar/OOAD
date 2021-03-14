@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import RicksApp.Instruments.Instrument;
+import RicksApp.Specs.InstrumentSpec;
+
 public class Inventory
 {
 	private List<Instrument> inventory;
@@ -16,13 +19,15 @@ public class Inventory
 	public void addInstrument(String serialNumber, double price,
 			InstrumentSpec spec)
 	{
-		Instrument instrument = null;
-		if(spec instanceof GuitarSpec)
-			instrument = new Guitar(serialNumber, price, (GuitarSpec)spec);
-		else if(spec instanceof MandolinSpec)
-			instrument = new Mandolin(serialNumber, price, (MandolinSpec)spec);
-		if(instrument != null)
-			inventory.add(instrument);
+		Instrument instrument = new Instrument(serialNumber, price, spec);
+		inventory.add(instrument);
+//		Instrument instrument = null;
+//		if(spec instanceof GuitarSpec)
+//			instrument = new Guitar(serialNumber, price, (GuitarSpec)spec);
+//		else if(spec instanceof MandolinSpec)
+//			instrument = new Mandolin(serialNumber, price, (MandolinSpec)spec);
+//		if(instrument != null)
+//			inventory.add(instrument);
 	}
 
 	public Instrument get(String serialNumber)

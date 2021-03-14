@@ -3,6 +3,10 @@ package RicksApp;
 import java.util.Iterator;
 import java.util.List;
 
+import RicksApp.Instruments.Guitar;
+import RicksApp.Instruments.Instrument;
+import RicksApp.Specs.GuitarSpec;
+import RicksApp.Specs.InstrumentSpec;
 import RicksApp.enums.Builder;
 import RicksApp.enums.Type;
 import RicksApp.enums.Wood;
