@@ -1,13 +1,14 @@
 package RicksApp;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import RicksApp.Instruments.Guitar;
 import RicksApp.Instruments.Instrument;
-import RicksApp.Specs.GuitarSpec;
 import RicksApp.Specs.InstrumentSpec;
 import RicksApp.enums.Builder;
+import RicksApp.enums.InstrumentType;
 import RicksApp.enums.Type;
 import RicksApp.enums.Wood;
 
@@ -18,24 +19,35 @@ public class GuitarTester
 		Inventory inventory = new Inventory();
 		initializeInventory(inventory);
 		
-		InstrumentSpec clientsChoice = new GuitarSpec(Builder.COLLINGS, "Stratocastor", Type.ELECTRIC,
-				Wood.MAPLE, Wood.CEDAR, 12);
+		Map<String, Object> propeties = new HashMap<String, Object>();
+//		propeties.put("builder", Builder.COLLINGS);
+//		propeties.put("backWood", Wood.INDIA_WOOD);
+		propeties.put("type", Type.ACOUSTIC);
+
 		
-		List<Instrument> matchingGuitar = inventory.search((GuitarSpec)clientsChoice);
+		InstrumentSpec clientSpec = new InstrumentSpec(propeties);
 		
-		if(!matchingGuitar.isEmpty())
+		List<Instrument> matchingInstruments = inventory.search(clientSpec);
+		
+		if(!matchingInstruments.isEmpty())
 		{
 			System.out.println("We found some guitar you like: ");
-			for(Iterator<Instrument> i = matchingGuitar.iterator(); i.hasNext();)
+			for(Iterator<Instrument> i = matchingInstruments.iterator(); i.hasNext();)
 			{
-				Guitar temp = (Guitar)i.next();
-				GuitarSpec spec = (GuitarSpec)temp.getSpec();
-				System.out.println("we have a " +
-						spec.getBuilder() + " " + spec.getModel() + " " +
-						spec.getType() + " " + spec.getNumStrings() + "-string" 
-						+ " guitar:\n  " + 
-						spec.getBackwood() + " back and sides,\n  " + 
-						spec.getTopWood() + " top.\n you can have it for only: " +
+				Instrument temp = (Instrument)i.next();
+				InstrumentSpec spec = (InstrumentSpec)temp.getSpec();
+				
+				System.out.println("\nwe have a " +
+						spec.getProperty("instrumentType") + " with following propeties");
+				for(Iterator<?> j = spec.getProperties().keySet().iterator(); j.hasNext();)
+				{
+					String propertyName = (String)j.next();
+					if(propertyName.equals("instruentType"))
+						continue;
+					System.out.println("   " + propertyName + ": " + spec.getProperty(propertyName));
+				}
+				
+				System.out.println("\nyou can have it for only: " +
 						temp.getPrice());
 			}
 		}
@@ -44,24 +56,29 @@ public class GuitarTester
 	}
 	private static void initializeInventory(Inventory inventory)
 	{
-		InstrumentSpec spec = new GuitarSpec( Builder.COLLINGS,
-				"Stratocastor", Type.ELECTRIC, Wood.MAPLE, Wood.CEDAR, 12);
-		inventory.addInstrument("1234", 500.5, spec);
+		Map<String, Object> propeties = new HashMap<String, Object>();
+		propeties.put("instrumentType", InstrumentType.BANJO);
+		propeties.put("builder", Builder.COLLINGS);
+		propeties.put("model", "CJ");
+		propeties.put("type", Type.ACOUSTIC);
+		propeties.put("numString", 6);
+		propeties.put("topWood", Wood.CEDAR);
+		propeties.put("backWood", Wood.INDIA_WOOD);
+		inventory.addInstrument("11232", 3987.13, new InstrumentSpec(propeties));
 		
-		spec = new GuitarSpec( Builder.COLLINGS,
-				"Stratocastor", Type.ELECTRIC, Wood.MAPLE, Wood.CEDAR, 12);
-		inventory.addInstrument("1234", 145.5, spec);
+		propeties.put("topWood", Wood.JAPENES);
+		propeties.put("backWood", Wood.MAPLE);
+		propeties.put("builder", Builder.MARTIN);
+		propeties.put("model", "D-18");
+		propeties.put("type", Type.ELECTRIC);
+		inventory.addInstrument("11254", 651.5, new InstrumentSpec(propeties));
 		
-		spec = new GuitarSpec( Builder.FENDER,
-				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.CEDAR, 11);
-		inventory.addInstrument("23456", 14632.5, spec);
-		
-		spec = new GuitarSpec( Builder.GIBSON,
-				"Not model", Type.ELECTRIC, Wood.JAPENES, Wood.MAPLE, 12);
-		inventory.addInstrument("6542", 300.5, spec);
-		
-		spec = new GuitarSpec( Builder.GIBSON,
-				"Stratocastor", Type.ELECTRIC, Wood.INDIA_WOOD, Wood.INDIA_WOOD, 3);
-		inventory.addInstrument("95412", 400.4, spec);
+
+		propeties.put("backWood", Wood.JAPENES);
+		propeties.put("topWood", Wood.MAPLE);
+		propeties.put("builder", Builder.OLSON);
+		propeties.put("model", "Stratocastor");
+		propeties.put("type", Type.ACOUSTIC);
+		inventory.addInstrument("1187", 987.9, new InstrumentSpec(propeties));
 	}
 }
